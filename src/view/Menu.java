@@ -94,8 +94,7 @@ public class Menu {
         }
         if (phoneNumber.equals(" ")) {
             Main.createMain();
-        }
-        else {
+        } else {
             System.out.print("Nhập tên: ");
             String name = scl.nextLine().trim();
             System.out.print("Nhập nhóm: ");
@@ -129,9 +128,38 @@ public class Menu {
     }
 
     public static void deleteUser(Scanner scl, PhoneBook phoneBook) {
-        System.out.print("Nhập số điện thoại cần xóa: ");
-        String numberPhone = scl.nextLine().trim().toLowerCase();
-        phoneBook.deleteUser(numberPhone);
+        PhoneNumberValidate phoneNumberValidate = new PhoneNumberValidate();
+        String phoneNumber = "";
+        boolean flag = true;
+        while (flag) {
+            while (true) {
+                System.out.print("Nhập số điện thoại cần xóa: ");
+                String phoneNumberTemp = scl.nextLine().toLowerCase().trim();
+                if (phoneNumberTemp.length() == 0) {
+                    phoneNumberTemp += " ";
+                }
+                if (phoneNumberValidate.validate(phoneNumberTemp) || phoneNumberTemp.equals(" ")) {
+                    phoneNumber = phoneNumberTemp;
+                    break;
+                }
+                System.out.println("Số điện thoại của bạn chưa đúng định dạng");
+            }
+            if (phoneBook.findIndexByNumberPhone(phoneNumber) != -1 || phoneNumber.equals(" ")) {
+                flag = false;
+            }
+        }
+        if (phoneNumber.equals(" ")) {
+            Main.createMain();
+        } else {
+            System.out.print("Bạn có muốn xóa không(y): ");
+            String check = scl.nextLine();
+            if (check.equals("y")) {
+                phoneBook.deleteUser(phoneNumber);
+            }
+            else {
+                Main.createMain();
+            }
+        }
     }
 
     public static void findUser(Scanner scl, PhoneBook phoneBook) {

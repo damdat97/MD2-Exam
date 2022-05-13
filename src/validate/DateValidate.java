@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DateValidate {
-    private static final String DATE_REGEX = "\\d{4}[-|]\\d{1,2}[-|]\\d{1,2}";
+    private static final String DATE_REGEX = "\\d{4}[-|]\\d{2}[-|]\\d{2}";
     private static Pattern pattern;
 
     public DateValidate() {
