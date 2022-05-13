@@ -79,47 +79,53 @@ public class Menu {
             while (true) {
                 System.out.print("Nhập số điện thoại cần sửa: ");
                 String phoneNumberTemp = scl.nextLine().toLowerCase();
-                if (phoneNumberValidate.validate(phoneNumberTemp)) {
+                if (phoneNumberTemp.length() == 0) {
+                    phoneNumberTemp += " ";
+                }
+                if (phoneNumberValidate.validate(phoneNumberTemp) || phoneNumberTemp.equals(" ")) {
                     phoneNumber = phoneNumberTemp;
                     break;
                 }
                 System.out.println("Số điện thoại của bạn chưa đúng định dạng");
             }
-            if (phoneBook.findIndexByNumberPhone(phoneNumber) != -1) {
+            if (phoneBook.findIndexByNumberPhone(phoneNumber) != -1 || phoneNumber.equals(" ")) {
                 flag = false;
             }
         }
-
-        System.out.print("Nhập tên: ");
-        String name = scl.nextLine().trim();
-        System.out.print("Nhập nhóm: ");
-        String group = scl.nextLine().trim();
-        System.out.print("Nhập giới tính: ");
-        String sex = scl.nextLine().trim().toLowerCase();
-        System.out.print("Nhập địa chỉ: ");
-        String address = scl.nextLine();
-        String email = "";
-        while (true) {
-            System.out.print("Nhập email: ");
-            String emailTemp = scl.nextLine().trim();
-            if (emailValidate.validate(emailTemp)) {
-                email = emailTemp;
-                break;
-            }
-            System.out.println("Email của bạn chưa đúng định dạng");
+        if (phoneNumber.equals(" ")) {
+            Main.createMain();
         }
-        LocalDate dateOfBirth = LocalDate.now();
-        while (true) {
-            System.out.print("Nhập ngày sinh(năm-tháng-ngày): ");
-            String date = scl.nextLine();
-            if (dateValidate.validate(date)) {
-                dateOfBirth = DateFormatter.parseDate(date);
-                break;
+        else {
+            System.out.print("Nhập tên: ");
+            String name = scl.nextLine().trim();
+            System.out.print("Nhập nhóm: ");
+            String group = scl.nextLine().trim();
+            System.out.print("Nhập giới tính: ");
+            String sex = scl.nextLine().trim().toLowerCase();
+            System.out.print("Nhập địa chỉ: ");
+            String address = scl.nextLine();
+            String email = "";
+            while (true) {
+                System.out.print("Nhập email: ");
+                String emailTemp = scl.nextLine().trim();
+                if (emailValidate.validate(emailTemp)) {
+                    email = emailTemp;
+                    break;
+                }
+                System.out.println("Email của bạn chưa đúng định dạng");
             }
-            System.out.println("Bạn phải nhập đúng định dạng");
+            LocalDate dateOfBirth = LocalDate.now();
+            while (true) {
+                System.out.print("Nhập ngày sinh(năm-tháng-ngày): ");
+                String date = scl.nextLine();
+                if (dateValidate.validate(date)) {
+                    dateOfBirth = DateFormatter.parseDate(date);
+                    break;
+                }
+                System.out.println("Bạn phải nhập đúng định dạng");
+            }
+            phoneBook.updateUser(phoneNumber, new User(phoneNumber, group, name, sex, address, dateOfBirth, email));
         }
-        phoneBook.updateUser(phoneNumber, new User(phoneNumber, group, name, sex, address, dateOfBirth, email));
-
     }
 
     public static void deleteUser(Scanner scl, PhoneBook phoneBook) {

@@ -3,15 +3,14 @@ package view;
 import control.PhoneBook;
 import file_handle.FileUserCSV;
 
-import java.awt.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
+    static PhoneBook phoneBook = new PhoneBook();
     public static void createMain() {
         Scanner scn = new Scanner(System.in);
         Scanner scl = new Scanner(System.in);
-        PhoneBook phoneBook = new PhoneBook();
         int choose = 0;
         String select;
         do {
